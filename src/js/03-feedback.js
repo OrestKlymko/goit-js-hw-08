@@ -3,12 +3,14 @@ const form = document.querySelector('.feedback-form')
 
 const textarea = document.querySelector('.feedback-form textarea')
 const input = document.querySelector('.feedback-form input')
+const saveItem = localStorage.getItem('formdata');
 reload();
 const formData ={};
 
 
 form.addEventListener('submit', ((e)=>{
 	e.preventDefault();
+  console.log(`Email: ${formData.email}, Message: ${formData.message}`)
 	e.target.reset();
 	localStorage.removeItem('formdata')
 }))
@@ -22,12 +24,17 @@ form.addEventListener('input',throttle(onChangeInput,500))
 
 function reload () {
 
-	const saveItem = localStorage.getItem('formdata');
-	if (saveItem) {
-		let temp = JSON.parse(saveItem);
-		input.value = temp.email;
-		textarea.value = temp.message;
-	}
-}
 
+  if (saveItem) {
+    let temp = JSON.parse(saveItem);
+    if(saveItem){
+      if (temp.email){
+        input.value = temp.email;
+      }
+    if (temp.message) {
+      textarea.value = temp.message;
+    }
+    }
+  }
+  }
 
